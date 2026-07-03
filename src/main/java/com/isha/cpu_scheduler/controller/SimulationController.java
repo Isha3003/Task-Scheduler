@@ -7,8 +7,7 @@ import com.isha.cpu_scheduler.algorithm.SJFScheduler;
 import com.isha.cpu_scheduler.dto.ProcessDTO;
 import com.isha.cpu_scheduler.dto.SimulationRequest;
 import com.isha.cpu_scheduler.dto.SimulationResponse;
-import com.isha.cpu_scheduler.entity.Simulation;
-import com.isha.cpu_scheduler.service.SimulationService;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,61 +17,35 @@ import java.util.List;
 @RequestMapping("/simulation")
 public class SimulationController {
 
-    private final SimulationService simulationService;
+    
     private final FCFSScheduler fcfsScheduler;
     private final SJFScheduler sjfScheduler;
     private final RoundRobinScheduler roundRobinScheduler;
     private final PriorityScheduler priorityScheduler;
 
-    public SimulationController(
-            SimulationService simulationService,
-            FCFSScheduler fcfsScheduler,
-            SJFScheduler sjfScheduler,
-            RoundRobinScheduler roundRobinScheduler,
-            PriorityScheduler priorityScheduler) {
+   public SimulationController(
+        FCFSScheduler fcfsScheduler,
+        SJFScheduler sjfScheduler,
+        RoundRobinScheduler roundRobinScheduler,
+        PriorityScheduler priorityScheduler) {
 
-        this.simulationService = simulationService;
-        this.fcfsScheduler = fcfsScheduler;
-        this.sjfScheduler = sjfScheduler;
-        this.roundRobinScheduler = roundRobinScheduler;
-        this.priorityScheduler = priorityScheduler;
-    }
+    this.fcfsScheduler = fcfsScheduler;
+    this.sjfScheduler = sjfScheduler;
+    this.roundRobinScheduler = roundRobinScheduler;
+    this.priorityScheduler = priorityScheduler;
+}
 
     @GetMapping
     public String test() {
         return "Simulation Controller Working";
     }
 
-    @PostMapping
-    public Simulation saveSimulation(@RequestBody Simulation simulation) {
-        return simulationService.saveSimulation(simulation);
-    }
+    
+    
+    
 
-    @GetMapping("/all")
-    public List<Simulation> getAllSimulations() {
-        return simulationService.getAllSimulations();
-    }
+    
 
-    @GetMapping("/{id}")
-    public Simulation getSimulationById(@PathVariable Long id) {
-        return simulationService.getSimulationById(id);
-    }
-
-    @PutMapping("/{id}")
-    public Simulation updateSimulation(
-            @PathVariable Long id,
-            @RequestBody Simulation simulation) {
-
-        return simulationService.updateSimulation(id, simulation);
-    }
-
-    @DeleteMapping("/{id}")
-    public String deleteSimulation(@PathVariable Long id) {
-
-        simulationService.deleteSimulation(id);
-
-        return "Simulation Deleted Successfully";
-    }
 
     // =========================
     // REAL SIMULATION API
